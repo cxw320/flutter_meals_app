@@ -5,17 +5,23 @@ import 'package:meals/widgets/meal_item.dart';
 import 'meal_detail.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.title, required this.meals});
+  const MealsScreen(
+      {super.key,
+      this.title,
+      required this.meals,
+      required this.onToggleFavorite});
 
-  final String title;
+  final String? title;
   final List<Meal> meals;
+  final void Function(Meal meal) onToggleFavorite;
 
   void _selectMeal(BuildContext context, Meal meal) {
     // load diff screen
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealsDetailScreen(
-          title: meal.title,
+          meal: meal,
+          onToggleFavorite: onToggleFavorite,
         ),
       ),
     );
@@ -49,8 +55,12 @@ class MealsScreen extends StatelessWidget {
       ]));
     }
 
+    if (title == null) {
+      return content;
+    }
+    // if the title is not null this portion of the code will execute
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(title!)),
       body: content,
     );
   }
