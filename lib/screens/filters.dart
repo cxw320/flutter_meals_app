@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 
 // import '../widgets/main_drawer.dart';
 
+enum Filter {
+  glutenFree,
+  lactoseFree,
+  vegetarian,
+  vegan,
+}
+
 class FiltersScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -31,8 +38,18 @@ class _FiltersScreenState extends State<FiltersScreen> {
         //   }
         // }),
         body: WillPopScope(
-          onWillPop: () {
-            Navigator.of(context).pop();
+          //async will wrap the returned value into a Future
+          onWillPop: () async {
+            //Pop manually
+            Navigator.of(context).pop({
+              Filter.glutenFree: _glutenFreeFilterSet,
+              Filter.lactoseFree: _lactoseFreeFilterSet,
+              Filter.vegetarian: _vegetarianFilterSet,
+              Filter.vegan: _veganFilterSet,
+            });
+            //Return false so we don't pop twice
+            //If the above lines of code did not navigate, we would return true
+            return false;
           },
           child: Column(
             children: [
