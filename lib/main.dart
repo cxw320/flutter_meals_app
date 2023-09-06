@@ -24,6 +24,5 @@ class App extends StatelessWidget {
       theme: theme,
       home: const TabsScreen(),
     );
-    print('');
   }
 }
