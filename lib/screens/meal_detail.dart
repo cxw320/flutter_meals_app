@@ -27,6 +27,7 @@ class MealsDetailScreen extends ConsumerWidget {
               );
             },
             icon: const Icon(Icons.star),
+            isSelected: false,
           )
         ]),
         body: SingleChildScrollView(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/providers/meals_provider.dart';
 
 import '../providers/favorites_provider.dart';
+import '../providers/filters_provider.dart';
 import '../widgets/main_drawer.dart';
 import 'categories.dart';
 import 'filters.dart';
@@ -49,9 +50,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     if (identifier == 'Filters') {
       final result =
           await Navigator.of(context).push<Map<Filter, bool>>(MaterialPageRoute(
-        builder: (ctx) => FiltersScreen(
-          currentFilters: _selectedFilters,
-        ),
+        builder: (ctx) => const FiltersScreen(),
       ));
       setState(() {
         _selectedFilters = result ?? kInitialFilters;
@@ -62,6 +61,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     final meals = ref.watch(mealsProvider);
+    final activeFilters = ref.watch(filtersProvider);
 
     final availableMeals = meals.where((meal) {
       if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
